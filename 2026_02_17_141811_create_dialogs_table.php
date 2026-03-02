@@ -1,0 +1,24 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('dialogs', function (Blueprint $table) {
+            $table->id();
+            $table->string('topic');
+            $table->foreignId('student_id')->constrained('users');
+            $table->foreignId('teacher_id')->constrained('users');
+            $table->enum('status', ['waiting', 'active', 'finished'])->default('waiting');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('dialogs');
+    }
+};
